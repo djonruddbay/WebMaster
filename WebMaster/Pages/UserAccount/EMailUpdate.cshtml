@@ -1,0 +1,56 @@
+@page
+@model EMailUpdateModel
+
+@{
+    ViewData["Title"] = "Update My E-Mail";
+    var emailGlyphicon = Model.IsEmailConfirmed ? "glyphicon-check" : "glyphicon-warning-sign";
+    var emailGlyphiconColor = Model.IsEmailConfirmed ? "green" : "orange";
+}
+
+<h2 style="text-decoration:underline">@ViewData["Title"]</h2>
+
+<div class="row container">
+    <div class="col-xs-6 col-md-4 UserWindow">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" class="RowTop" method="post">
+
+            <div class="form-group has-feedback has-clear">
+                <label>Current E-Mail Address:</label>
+                <input asp-for="Input.CurrentEmail" disabled
+                       class="input-sm UserInput form-control UserInput " />
+                <i class="glyphicon @emailGlyphicon form-control-feedback" style="color:@emailGlyphiconColor"></i>
+            </div>
+
+            <div class="form-group has-feedback has-clear">
+                <label>New E-Mail Address</label>
+                <label id="emStatus" class="pull-right" style="color:red"></label>
+                <input asp-for="Input.Email" type="text" id="UserEmail"
+                       class="form-control input-sm NoCopy NoPaste UserInput "
+                       spellcheck="false" autocomplete="off" />
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+
+            <div class="form-group has-feedback has-clear">
+                <label>Confirm New E-Mail</label>
+                <label id="emConfirmStatus" class="pull-right" style="color:red"></label>
+                <input asp-for="Input.ConfirmEmail" type="text" id="ConfirmEmail" disabled
+                       class="form-control input-sm NoCopy NoPaste UserInput "
+                       spellcheck="false" autocomplete="off" />
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+
+            <hr />
+
+            <div class="form-group RowBottom">
+                <div asp-validation-summary="All" class="text-danger" style="margin-top:10px"></div>
+                <button type="submit" class="btn btn-sm btn-success">
+                    Save Changes&nbsp;<i class="fa fa-save"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/EMail.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

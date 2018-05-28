@@ -1,0 +1,204 @@
+@page
+@model UserEditModel
+
+@{
+    ViewData["Title"] = "User Edit";
+}
+
+<h2 style="text-decoration:underline">@ViewData["Title"]</h2>
+
+<div class="row container">
+    <form method="post">
+
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4 UserWindow">
+
+            <input type="hidden" asp-for="Input.Id" />
+
+            <div class="form-group has-feedback has-clear RowTop">
+                <label asp-for="Input.UserName"></label>
+                <input asp-for="Input.UserName" autofocus
+                       class="form-control input-sm UserInput" spellcheck="false" autocomplete="off" />
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+
+            <div class="form-group has-feedback has-clear">
+                <label asp-for="Input.Email" style="padding-right:10px"></label>
+                <label asp-for="Input.EmailConfirmed" class="hoverCheckBox">
+                    <input asp-for="Input.EmailConfirmed" type="checkbox" class="hoverCheckBox"
+                           style="transform:scale(1.2); margin-left:3px;" />
+                    &nbsp;Confirmed?
+                </label>
+                <input asp-for="Input.Email" type="text" id="UserEmail"
+                       class="form-control input-sm UserInput NoCopy NoPaste"
+                       spellcheck="false" autocomplete="off" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+            <div class="form-group has-feedback has-clear">
+                <label asp-for="Input.PhoneNumber" style="padding-right:10px"></label>
+                <label asp-for="Input.PhoneNumberConfirmed" class="hoverCheckBox">
+                    <input asp-for="Input.PhoneNumberConfirmed" type="checkbox"
+                           class="hoverCheckBox" &phoneConfirmedDisabled
+                           style="transform:scale(1.2); margin-left:3px;" />
+                    &nbsp;Confirmed?
+                </label>
+                <input asp-for="Input.PhoneNumber"
+                       class="form-control input-sm UserInput PhoneNumber" spellcheck="false" autocomplete="off" />
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+            <div class="form-group has-feedback has-clear">
+                <label asp-for="Input.SecurityColorAnswer"></label>
+                <input asp-for="Input.SecurityColorAnswer"
+                       class="form-control input-sm UserInput" spellcheck="false" autocomplete="off" />
+                <span asp-validation-for="Input.SecurityColorAnswer" class="text-danger"></span>
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+            <div class="form-group has-feedback has-clear">
+                <label asp-for="Input.SecuritySymbolAnswer"></label>
+                <input asp-for="Input.SecuritySymbolAnswer"
+                       class="form-control input-sm UserInput" spellcheck="false" autocomplete="off" />
+                <span asp-validation-for="Input.SecuritySymbolAnswer" class="text-danger"></span>
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+            <div class="form-group has-feedback has-clear">
+                <label asp-for="Input.AccessFailedCount"></label>
+                <input asp-for="Input.AccessFailedCount" type="text"
+                       class="form-control input-sm UserInput" spellcheck="false" autocomplete="off" />
+                <span asp-validation-for="Input.AccessFailedCount" class="text-danger"></span>
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+            <div class="form-group has-feedback has-clear" style="margin-bottom:10px">
+                <label asp-for="Input.LockoutEnabled" style="padding-right:10px"></label>
+                <label asp-for="Input.LockoutEnabled" class="hoverCheckBox">
+                    <input asp-for="Input.LockoutEnabled" type="checkbox" class="hoverCheckBox"
+                           style="transform:scale(1.2); margin-left:3px;" />
+                    &nbsp;Enabled?
+                </label>
+                <input asp-for="Input.LockoutEnd"
+                       class="form-control input-sm UserInput" autocomplete="off" />
+                <span asp-validation-for="Input.LockoutEnd" class="text-danger"></span>
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+
+            <div class="form-group has-feedback has-clear" style="padding-top:3px">
+                <label asp-for="Input.TwoFactorEnabled" class="hoverCheckBox"> </label>
+                <input asp-for="Input.TwoFactorEnabled"
+                       type="checkbox" class="hoverCheckBox"
+                       style="transform:scale(1.2); margin-left:3px;" />
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4 UserWindow">
+
+            <div class="form-group RowTop">
+                <label asp-for="Input.NormalizedUserName"></label>
+                <input asp-for="Input.NormalizedUserName" disabled
+                       class="form-control input-sm" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.NormalizedEmail"></label>
+                <input asp-for="Input.NormalizedEmail" disabled
+                       class="form-control input-sm" />
+            </div>
+
+            <div class="form-group" style="margin-top:18px;">
+                <label asp-for="Input.PasswordHash"></label>
+                <input asp-for="Input.PasswordHash" disabled
+                       class="form-control input-sm" />
+                <input type="hidden" asp-for="Input.PasswordHash" />
+            </div>
+
+            <div class="form-group" style="margin-top:12px;">
+                <label asp-for="Input.SecurityStamp"></label>
+                <input asp-for="Input.SecurityStamp" disabled
+                       class="form-control input-sm" />
+                <input type="hidden" asp-for="Input.SecurityStamp" />
+            </div>
+            <div class="form-group" style="margin-top:10px;">
+                <label asp-for="Input.ConcurrencyStamp"></label>
+                <input asp-for="Input.ConcurrencyStamp" disabled
+                       class="form-control input-sm" />
+                <input type="hidden" asp-for="Input.ConcurrencyStamp"
+                       class="form-control input-sm" />
+            </div>
+
+            <div class="form-group" style="margin-top:12px;">
+                <label asp-for="Input.Id"></label>
+                <input asp-for="Input.Id" disabled
+                       class="form-control input-sm" />
+            </div>
+
+            <div class="form-group " style="margin-top:24px; margin-bottom:17px">
+                @if (!Model.IsAppUser)
+                {
+                    <a href=""
+                       class="btn btn-sm btn-block disabled"
+                       style="background-color:lightgray; font-weight:800">
+                        Profile Not Available For User!
+                    </a>
+                }
+                else
+                {
+                    @if (@TempData["DeletedProfile"].ToString() == "true")
+                    {
+                        <a href=""
+                           class="btn btn-sm btn-block disabled"
+                           style="background-color:red; color:yellow; font-weight:800">
+                            Profile Has Been Deleted By Another User!
+                        </a>
+                    }
+                    else
+                    {
+                        @if (Model.ProfileId == 0)
+                        {
+                            <a href=""
+                               class="btn btn-sm btn-info btn-block disabled"
+                               style="color:black; font-weight:800">
+                                Profile Not On File For User!
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-page="/Profile/ProfileEdit"
+                               asp-route-userId="@Model.Input.Id"
+                               asp-route-profileId="@Model.ProfileId"
+                               asp-route-returnUrl="/UserAccount/UserEdit"
+                               class="btn btn-sm btn-info btn-block ">
+                                View&nbsp;/&nbsp;Edit&nbsp;&nbsp;Profile&nbsp;<i class="fa fa-hand-point-right"></i>
+                            </a>
+                        }
+                    }
+                }
+            </div>
+
+            <hr />
+
+            <div class="RowTop RowBottom">
+                <div class="btn-toolbar">
+                    <button class="btn btn-sm btn-success" type="submit"
+                            onclick="document.getElementById('UpdateSuccessfull').classList.add('hidden');">
+                        Save&nbsp;<span class="fa fa-save"></span>
+                    </button>
+
+                    <label class="@TempData["UpdateSuccessfulMessageHidden"]" id="UpdateSuccessfull"
+                           style="background-color:green; color:yellow; border:1px solid black; border-radius:10px;
+                                padding-top:2px; margin-top:4px; margin-left:23px; height:25px;">
+                        <span style="padding-left:10px; padding-right:10px">Update  Successful!</span>
+                    </label>
+                    <a asp-page="./UserIndex"
+                       class="btn btn-sm btn-primary pull-right">
+                        Return&nbsp;<span class="fa fa-hand-point-left"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/PhoneNumber.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

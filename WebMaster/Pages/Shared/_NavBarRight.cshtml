@@ -1,0 +1,56 @@
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-controller="UserAccount" asp-action="SignOut" method="post" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a asp-area="" asp-page="/UserAccount/UserIndex">
+                    Users&nbsp;<i class="fa fa-users"></i>
+                </a>
+            </li>
+
+            <li>
+                <a asp-area="" asp-page="/Profile/ProfileIndex">
+                    Profiles&nbsp;<i class="fas fa-user-times"></i>
+                </a>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    @UserManager.GetUserName(User) <span class="glyphicon glyphicon-user"></span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" style="background-color:gray; border:2px solid whitesmoke">
+
+                    <li>
+                        <a asp-page="/UserAccount/EmailUpdate" class="btn btn-info">
+                            E-Mail Update&nbsp;&nbsp;<i class="fa fa-envelope"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-page="/UserAccount/PasswordChange" class="btn btn-info">
+                            Change Password&nbsp;&nbsp;<i class="fa fa-key"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/UserAccount/SecuritySelectionsUpdate" class="btn btn-info">
+                            Update Security Selections&nbsp;&nbsp;<i class="fa fa-lock"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <button type="submit" class="btn btn-sm btn-danger nav-justified">
+                            Sign-Out&nbsp;&nbsp;<i class="fa fa-sign-out-alt"></i>
+                        </button>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </form>
+}
+

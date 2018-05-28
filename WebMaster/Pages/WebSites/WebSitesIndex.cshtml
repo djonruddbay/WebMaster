@@ -1,0 +1,121 @@
+﻿@page
+@model WebMaster.Pages.WebSites.WebSitesIndexModel
+
+@{
+    ViewData["Title"] = "WebSites";
+}
+
+<h2 style="text-decoration:underline">@ViewData["Title"]</h2>
+
+<div class="col-xs-12 col-sm-7 UserWindow">
+
+    <div class="RowTop">
+        <label class="InfoLabel">
+            &nbsp;@TempData["ProfileName"]&nbsp;
+        </label>
+        <button style="margin-left:10%; background-color:red; color:yellow"
+                disabled @TempData["DeletedWebSiteMsgHidden"]>
+            Selected WebSite Was Deleted By Another User!
+        </button>
+        <label class="pull-right InfoLabel" >
+            &nbsp;@TempData["WebSitesMenuDescription"]&nbsp;
+        </label>
+    </div>
+
+    <hr />
+
+    <table class="table RowTop">
+        <thead>
+            <tr>
+                <th style="width:10%">Id</th>
+                <th style="width:20%">Description</th>
+                <th style="width:50%">Url</th>
+                <th style="width:10%">&nbsp;&nbsp;Options&nbsp;&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.WebSites)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @{
+                            var shortWebSiteURL = item.WebSiteURL;
+                            if (shortWebSiteURL.Length > 45)
+                            {
+                                shortWebSiteURL = shortWebSiteURL.Substring(0, 45) + " ...";
+                            }
+                        }
+                        @shortWebSiteURL
+                    </td>
+
+                    <td style="width:10%">
+                        <a asp-page="WebSitesEdit"
+                           asp-route-userId=@TempData["UserId"]
+                           asp-route-profileId=@TempData["ProfileId"]
+                           asp-route-profileName=@TempData["ProfileName"]
+                           asp-route-webSitesMenuId=@TempData["WebSitesMenuId"]
+                           asp-route-WebSitesMenuDescription=@TempData["WebSitesMenuDescription"]
+                           asp-route-webSiteId="@item.Id"
+                           asp-route-returnUrl=@TempData["ReturnUrl"]
+                           data-toggle="tooltip" data-placement="left" title="Edit Item!"
+                           class="btn btn-primary btn-xs toolTip pull-left"
+                           style="padding-left:3px; padding-right:3px">
+                            <i class="fa fa-pencil-alt"></i>
+                        </a>
+                        <a asp-page="WebSitesDelete"
+                           asp-route-userId=@TempData["UserId"]
+                           asp-route-profileId=@TempData["ProfileId"]
+                           asp-route-profileName=@TempData["ProfileName"]
+                           asp-route-webSitesMenuId=@TempData["WebSitesMenuId"]
+                           asp-route-WebSitesMenuDescription=@TempData["WebSitesMenuDescription"]
+                           asp-route-webSiteId="@item.Id"
+                           asp-route-returnUrl=@TempData["ReturnUrl"]
+                           data-toggle="tooltip" data-placement="left" title="Delete Item!"
+                           class="btn btn-danger btn-xs toolTip pull-left"
+                           style="padding-left:3px; padding-right:3px">
+                            <i class="fa fa-trash-alt"></i>
+                        </a>
+                        <a href="@item.WebSiteURL" target="_blank"
+                           data-toggle="tooltip" data-placement="left" title="Launch WebSite!"
+                           class="btn btn-info btn-xs toolTip pull-left"
+                           style="padding-left:2px; padding-right:2px">
+                            <i class="fas fa-rocket"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <hr />
+
+    <div class="RowBottom">
+        <div style=" margin-top:10px">
+            <a asp-page="WebSitesCreate"
+               asp-route-userId=@TempData["UserId"]
+               asp-route-profileId=@TempData["ProfileId"]
+               asp-route-profileName=@TempData["ProfileName"]
+               asp-route-webSitesMenuId=@TempData["WebSitesMenuId"]
+               asp-route-WebSitesMenuDescription=@TempData["WebSitesMenuDescription"]
+               asp-route-returnUrl=@TempData["ReturnUrl"]
+               class="btn btn-sm btn-success">
+                Create New&nbsp;<i class="fa fa-plus-circle"></i>
+            </a>
+
+            <a asp-page="/WebSitesMenu/WebSitesMenuIndex"
+               asp-route-userId=@TempData["UserId"]
+               asp-route-profileId=@TempData["ProfileId"]
+               asp-route-profileName=@TempData["ProfileName"]
+               asp-route-returnUrl=@TempData["ReturnUrl"]
+               class="btn btn-sm btn-primary pull-right">
+                Return&nbsp;<i class="fa fa-hand-point-left"></i>
+            </a>
+        </div>
+    </div>
+</div>

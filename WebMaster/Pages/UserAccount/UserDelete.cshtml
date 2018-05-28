@@ -1,0 +1,84 @@
+﻿@page
+@model WebMaster.Pages.User.UserDeleteModel
+
+@{
+    ViewData["Title"] = "User Delete";
+}
+<h2 style="text-decoration:underline">@ViewData["Title"]</h2>
+
+<div class="row container">
+    <div class="col-xs-12 col-sm-3 col-md-5 col-lg-4 UserWindow">
+        <form method="post">
+            <input type="hidden" asp-for="ApplicationUser.Id" />
+            <dl class="dl-horizontal RowTop">
+
+                <dt>
+                    Id
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ShortUserId)
+                </dd>
+                <dt>
+                    User Name
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ApplicationUser.UserName)
+                </dd>
+                <dt>
+                    Profile On File
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.AccountEstablished)
+                </dd>
+                <dt>
+                    E-Mail
+                </dt>
+                <dd>
+                    <span style="transform:scale(1.3); margin-right:2px;">
+                        @Html.DisplayFor(model => model.ApplicationUser.EmailConfirmed)
+                    </span>
+                    @Html.DisplayFor(model => model.ShortEmail)
+                </dd>
+                <dt>
+                    Phone Number
+                </dt>
+                <dd>
+                    @if (Model.ApplicationUser.PhoneNumber != null)
+                    {
+                        <span style="transform:scale(1.3); margin-right:2px;">
+                            @Html.DisplayFor(model => model.ApplicationUser.PhoneNumberConfirmed)
+                        </span>
+                        @Html.DisplayFor(model => model.ApplicationUser.PhoneNumber)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => model.NOFMsg)
+                    }
+                </dd>
+            </dl>
+
+
+            <div>
+                @if (Model.AccountEstablished)
+                {
+                    <hr />
+                    <button class="btn btn-block btn-lg RowTop" style="font-weight:600; background-color:aqua; color:red; " disabled>
+                        Warning...Profile On File!!!
+                    </button>
+                }
+            </div>
+
+            <hr />
+
+            <div class="form-group RowBottom" style="margin-top:10px">
+                <button class="btn btn-sm btn-danger" type="submit">
+                    Verify Delete&nbsp;<span class="fa fa-trash"></span>
+                </button>
+                <a asp-page="./UserIndex" class="btn btn-sm btn-primary pull-right">
+                    Return&nbsp;<span class="fa fa-hand-point-left"></span>
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>

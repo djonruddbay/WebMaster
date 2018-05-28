@@ -1,0 +1,70 @@
+﻿@page
+@model WebMaster.Pages.WebSites.WebSitesCreateModel
+
+@{
+    ViewData["Title"] = "WebSites Create";
+}
+
+<h2 style="text-decoration:underline">@ViewData["Title"]</h2>
+
+<div class="row container">
+    <form method="post"
+          asp-route-userId=@TempData["UserId"]
+          asp-route-webSitesMenuId=@TempData["WebSitesMenuId"]
+          asp-route-profileId=@TempData["ProfileId"]
+          asp-route-profileName=@TempData["ProfileName"]
+          asp-route-webSitesMenuDescription=@TempData["WebSitesMenuDescription"]
+          asp-route-returnUrl=@TempData["ReturnUrl"]>
+
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4  UserWindow">
+
+            <div class="RowTop">
+                <label class="InfoLabel">
+                    &nbsp;@TempData["ProfileName"]&nbsp;
+                </label>
+                <label class="pull-right InfoLabel">
+                    &nbsp;@TempData["WebSitesMenuDescription"]&nbsp;
+                </label>
+            </div>
+
+            <hr />
+
+            <div class="form-group has-feedback has-clear RowTop">
+                <label asp-for="WebSitesModel.Description" class="control-label"></label>
+                <input asp-for="WebSitesModel.Description" class="form-control" spellcheck="false" autofocus />
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+            <div class="form-group has-feedback has-clear">
+                <label asp-for="WebSitesModel.WebSiteURL" class="control-label"></label>
+                <input asp-for="WebSitesModel.WebSiteURL" class="form-control url" />
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+
+            <hr />
+
+            <div class="RowBottom">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <button class="btn btn-sm btn-success" type="submit">
+                    Create New&nbsp;<i class="fa fa-save"></i>
+                </button>
+
+                <a asp-page="/WebSites/WebSitesIndex"
+                   asp-route-userId=@TempData["UserId"]
+                   asp-route-profileId=@TempData["ProfileId"]
+                   asp-route-profileName=@TempData["ProfileName"]
+                   asp-route-webSitesMenuId=@TempData["WebSitesMenuId"]
+                   asp-route-webSitesMenuDescription=@TempData["WebSitesMenuDescription"]
+                   asp-route-returnUrl=@TempData["ReturnUrl"]
+                   class="btn btn-sm btn-primary pull-right">
+                    Return&nbsp;<i class="fa fa-hand-point-left"></i>
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/Url.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

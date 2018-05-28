@@ -1,0 +1,49 @@
+@page
+@model SignInModel
+
+@{
+    ViewData["Title"] = "Sign-In";
+}
+
+<h2 style="text-decoration:underline">@ViewData["Title"]</h2>
+
+<div class="row container">
+    <form method="post">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 UserWindow">
+
+            <label asp-for="Input.UserName" class="RowTop" style="font-size:large; margin-bottom:3px"></label>
+            <div class="form-group has-feedback has-clear">
+                <input asp-for="Input.UserName" type="text" autofocus
+                       class="form-control input-sm UserInput"
+                       spellcheck="false" autocomplete="off" />
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+
+            <label asp-for="Input.Password" style="font-size:large; margin-bottom:3px"></label>
+            <div class="form-group has-feedback Password">
+                <input asp-for="Input.Password" type="password" id="Password"
+                       class="form-control input-sm UserInput"
+                       spellcheck="false" autocomplete="off" />
+                <i class="form-control-clear glyphicon glyphicon-eye-open form-control-feedback"></i>
+            </div>
+
+            <hr />
+
+            <div class="RowBottom">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div>
+                    <button type="submit" class="btn btn-sm btn-success">
+                        Sign-In&nbsp;<span class="fa fa-sign-in-alt"></span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/Password.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+

@@ -1,0 +1,67 @@
+﻿@page
+@model WebMaster.Pages.WebSitesMenu.WebSitesMenuEditModel
+
+@{
+    ViewData["Title"] = "WebSiteMenu Edit";
+}
+
+<h2 style="text-decoration:underline">@ViewData["Title"]</h2>
+
+<div class="row container">
+    <form method="post"
+          asp-route-userId=@TempData["UserId"]
+          asp-route-profileId=@TempData["ProfileId"]
+          asp-route-profileName=@TempData["ProfileName"]
+          asp-route-returnUrl=@TempData["ReturnUrl"]>
+
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4  UserWindow">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="WebSitesMenuModel.Id" />
+            <input type="hidden" asp-for="WebSitesMenuModel.ProfileId" />
+            <input type="hidden" asp-for="WebSitesMenuModel.RowVersion" />
+
+            <div class="RowTop">
+                <label class="InfoLabel">
+                    &nbsp;@TempData["ProfileName"]&nbsp;
+                </label>
+            </div>
+
+            <hr />
+
+            <div class="form-group has-feedback has-clear RowTop">
+                <label asp-for="WebSitesMenuModel.SequenceNumber" class="control-label"></label>
+                <input asp-for="WebSitesMenuModel.SequenceNumber" class="form-control integerOnly" autofocus />
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+            <div class="form-group has-feedback has-clear">
+                <label asp-for="WebSitesMenuModel.Description" class="control-label"></label>
+                <input asp-for="WebSitesMenuModel.Description" class="form-control" spellcheck="false" />
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+
+            <hr />
+
+            <div class="RowBottom">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <button class="btn btn-sm btn-success" type="submit">
+                    Save Changes&nbsp;<i class="fa fa-save"></i>
+                </button>
+
+                <a asp-page="/WebSitesMenu/WebSitesMenuIndex"
+                   asp-route-userId=@TempData["UserId"]
+                   asp-route-profileId=@TempData["ProfileId"]
+                   asp-route-profileName=@TempData["ProfileName"]
+                   asp-route-returnUrl=@TempData["ReturnUrl"]
+                   class="btn btn-sm btn-primary pull-right">
+                    Return&nbsp;<i class="fa fa-hand-point-left"></i>
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

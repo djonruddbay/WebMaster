@@ -1,0 +1,168 @@
+﻿@page
+@model WebMaster.Pages.Profile.ProfileIndexModel
+
+@{
+    ViewData["Title"] = "Profile Index";
+    var prevDisabled = !Model.ProfilesModel.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.ProfilesModel.HasNextPage ? "disabled" : "";
+}
+
+<h2 style="text-decoration:underline;">@ViewData["Title"]</h2>
+
+<form>
+    <div class="row container">
+        <div class="pull-right btn-group">
+            <button name="searchBy" value="Id" class="btn btn-xs btn-info"
+                    style="padding-left:6px; padding-right:6px">
+                Id&nbsp;&nbsp;<span class="fa fa-search"></span>
+            </button>
+            <button name="searchBy" value="LastName" class="btn btn-xs btn-info"
+                    style="padding-left:6px; padding-right:6px">
+                Name&nbsp;&nbsp;<span class="fa fa-search"></span>
+            </button>
+            <button name="searchBy" value="UserId" class="btn btn-xs btn-info"
+                    style="padding-left:6px; padding-right:6px">
+                User-Id&nbsp;&nbsp;<span class="fa fa-search"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="row container">
+        <button style="background-color:red; color:yellow" 
+                disabled @TempData["DeletedProfileMsgHidden"]>
+            Selected Profile Was Deleted By Another
+        </button>
+        <a asp-page="./ProfileIndex" class="btn btn-sm btn-success pull-right"
+           style="padding-left:6px; padding-right:6px; padding-top:3px; padding-bottom:4px">
+            Reset&nbsp;<span class="fa fa-undo"></span>
+        </a>
+        <input class="input-sm UserInput pull-right" type="text" name="SearchString"
+               value="@Model.CurrentFilter" autofocus
+               style="background-color: antiquewhite; width:125px;"
+               spellcheck="false" autocomplete="off" placeholder="Search Profiles" />
+    </div>
+
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./ProfileIndex"
+                   asp-route-sortOrder="@Model.IdSort"
+                   asp-route-currentFilter="@Model.CurrentFilter"
+                   asp-route-searchBy="@Model.SearchBy">
+                    @Html.DisplayNameFor(model => model.ProfilesModel[0].Id)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./ProfileIndex"
+                   asp-route-sortOrder="@Model.NameSort"
+                   asp-route-currentFilter="@Model.CurrentFilter"
+                   asp-route-searchBy="@Model.SearchBy">
+                    @Html.DisplayNameFor(model => model.ProfilesModel[0].LastName)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProfilesModel[0].FirstName)
+            </th>
+            <th>
+                <a asp-page="./ProfileIndex"
+                   asp-route-sortOrder="@Model.AccountNumberSort"
+                   asp-route-currentFilter="@Model.CurrentFilter"
+                   asp-route-searchBy="@Model.SearchBy">
+                    @Html.DisplayNameFor(model => model.ProfilesModel[0].AccountNumber)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./ProfileIndex" asp-route-sortOrder="@Model.DateCreateSort">
+                    @Html.DisplayNameFor(model => model.ProfilesModel[0].DateCreate)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./ProfileIndex" asp-route-sortOrder="@Model.DateLastUpdateSort">
+                    @Html.DisplayNameFor(model => model.ProfilesModel[0].DateLastUpdate)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./ProfileIndex" asp-route-sortOrder="@Model.UserIdSort">
+                    @Html.DisplayNameFor(model => model.ProfilesModel[0].UserId)
+                </a>
+            </th>
+
+            <th>
+                <a asp-page="./ProfileIndex"
+                   asp-route-sortOrder="@Model.CurrentSort"
+                   asp-route-pageIndex="@(Model.ProfilesModel.PageIndex - 1)"
+                   asp-route-currentFilter="@Model.CurrentFilter"
+                   asp-route-searchBy="@Model.SearchBy"
+                   data-toggle="tooltip" data-placement="left" title="Page Up!"
+                   class="btn btn-xs btn-warning pull-left toolTip @prevDisabled"
+                   style="padding-top:0px; padding-bottom:0px">
+                    <span class="fa fa-arrow-up"></span>
+                </a>
+                <a asp-page="./ProfileIndex"
+                   asp-route-sortOrder="@Model.CurrentSort"
+                   asp-route-pageIndex="@(Model.ProfilesModel.PageIndex + 1)"
+                   asp-route-currentFilter="@Model.CurrentFilter"
+                   asp-route-searchBy="@Model.SearchBy"
+                   data-toggle="tooltip" data-placement="left" title="Page Down!"
+                   class="btn btn-xs btn-warning pull-right toolTip @nextDisabled"
+                   style="padding-top:0px; padding-bottom:0px">
+                    <span class="fa fa-arrow-down"></span>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ProfilesModel)
+        {
+            var shortFirstName = item.FirstName;
+            if (item.FirstName.Length > 20) {
+                shortFirstName = item.FirstName.Substring(0, 20);
+            }
+
+            <tr>
+                <td style="width:8%">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td style="width:10%">
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td style="width:15%">
+                    @shortFirstName
+                </td>
+                <td style="width:15%">
+                    @Html.DisplayFor(modelItem => item.AccountNumber)
+                </td>
+                <td style="width:10%">
+                    @Html.DisplayFor(modelItem => item.DateCreate)
+                </td>
+                <td style="width:10%">
+                    @Html.DisplayFor(modelItem => item.DateLastUpdate)
+                </td>
+                <td style="width:25%">
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+
+                <td style="width:7%">
+                    <a asp-page="./ProfileEdit"
+                       asp-route-userId="@item.UserId"
+                       asp-route-profileId="@item.Id"
+                       asp-route-returnUrl="/Profile/ProfileIndex"
+                       data-toggle="tooltip" data-placement="left" title="Edit Profile!"
+                       class="btn btn-primary btn-xs pull-left toolTip">
+                        <i class="fa fa-pencil-alt"></i>
+                    </a>
+                    <a asp-page="./ProfileDelete"
+                       asp-route-userId="@item.UserId"
+                       asp-route-profileId="@item.Id"
+                       data-toggle="tooltip" data-placement="left" title="Delete Profile!"
+                       class="btn btn-danger btn-xs pull-right toolTip">
+                        <i class="fa fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

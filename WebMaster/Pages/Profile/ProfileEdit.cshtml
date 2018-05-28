@@ -1,0 +1,202 @@
+﻿@page
+@model WebMaster.Pages.Profile.ProfileEditModel
+
+@{
+    ViewData["Title"] = "Profile Edit";
+    bool showRefresh = TempData["UpdateUnSuccessfulMessageHidden"].ToString() == "hidden" ? false : true;
+}
+
+<h2 style="text-decoration:underline">@ViewData["Title"]</h2>
+
+<div class="row container">
+    <form method="post"
+          asp-route-userId=@TempData["UserId"]
+          asp-route-profileId=@TempData["ProfileId"]
+          asp-route-returnUrl=@TempData["ReturnUrl"]>
+
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4  UserWindow">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Profile.Id" />
+            <input type="hidden" asp-for="Profile.RowVersion" />
+
+            <div class="row RowTop" >
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label asp-for="Profile.Id" class="control-label" style="margin-bottom:0px"></label>
+                        <input asp-for="Profile.Id" class="form-control input-sm" disabled />
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label asp-for="Profile.UserId" class="control-label" style="margin-bottom:0px"></label>
+                        <input asp-for="Profile.UserId" class="form-control input-sm" disabled />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label>Create Date</label>
+                        <input asp-for="CreateDate" class="form-control input-sm" disabled />
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label>Last Update</label>
+                        <input asp-for="LastUpdate" class="form-control input-sm" disabled />
+                    </div>
+                </div>
+            </div>
+
+            <hr style="margin-top:0px" />
+
+            <div class="row RowTop">
+                <div class="col-xs-6">
+                    <div class="form-group has-feedback has-clear">
+                        <label asp-for="Profile.ProfileImage" class="control-label"></label>
+                        <input asp-for="Profile.ProfileImage" class="form-control input-sm" autofocus
+                               spellcheck="false" autocomplete="off"/>
+                        <span asp-validation-for="Profile.ProfileImage" class="text-danger"></span>
+                        <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group has-feedback has-clear">
+                        <label asp-for="Profile.AccountNumber" class="control-label"></label>
+                        <input asp-for="Profile.AccountNumber" class="form-control input-sm AccountNumber" />
+                        <span asp-validation-for="Profile.AccountNumber" class="text-danger"></span>
+                        <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group has-feedback has-clear">
+                        <label asp-for="Profile.FirstName" class="control-label"></label>
+                        <input asp-for="Profile.FirstName" class="form-control input-sm" />
+                        <span asp-validation-for="Profile.FirstName" class="text-danger"></span>
+                        <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group has-feedback has-clear">
+                        <label asp-for="Profile.LastName" class="control-label"></label>
+                        <input asp-for="Profile.LastName" class="form-control input-sm" />
+                        <span asp-validation-for="Profile.LastName" class="text-danger"></span>
+                        <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group has-feedback has-clear" style="margin-bottom:0px">
+                <label class="control-label">Address Lines *</label>
+                <input asp-for="Profile.AddressLine1" class="form-control input-sm" />
+                <span asp-validation-for="Profile.AddressLine1" class="text-danger"></span>
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+            <div class="form-group has-feedback has-clear">
+                <input asp-for="Profile.AddressLine2" class="form-control input-sm" />
+                <span asp-validation-for="Profile.AddressLine2" class="text-danger"></span>
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+            <div class="form-group has-feedback has-clear">
+                <label class="control-label">City *</label>
+                <input asp-for="Profile.City" class="form-control input-sm" />
+                <span asp-validation-for="Profile.City" class="text-danger"></span>
+                <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <label class="control-label">State *</label>
+                    <select asp-for="Profile.State" class="form-control input-sm" id="selectState">
+                        @await Html.PartialAsync("_StateSelection")
+                    </select>
+                    <input type="hidden" asp-for="Profile.State" id="userState" />  @*leave this below select or edit won't work*@
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group has-feedback has-clear">
+                        <label class="control-label">Zip Code *</label>
+                        <input asp-for="Profile.ZipCode"
+                               class="form-control input-sm zipCode NoCopy NoPaste" />
+                        <span asp-validation-for="Profile.ZipCode" class="text-danger"></span>
+                        <i class="form-control-clear glyphicon glyphicon-remove-sign form-control-feedback"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <span style="font-size:smaller; color:gray;">
+                    <i class="fas fa-asterisk"></i>&nbsp;Optional Entries
+                </span>
+            </div>
+
+            <hr style="margin-top:0px" />
+
+            <div class="RowBottom">
+                <div class="@TempData["UpdateSuccessfulMessageHidden"]" id="UpdateSuccessfull"
+                     style="text-align:center">
+                    <h4 style="background-color:green; color:yellow; border-radius:10px">Profile  Update  Successful!</h4>
+                </div>
+                <div class="@TempData["UpdateUnSuccessfulMessageHidden"]" id="UpdateUnSuccessfull"
+                     style="text-align:center">
+                    <h4 style="background-color:orange; color:black; border-radius:10px">Profile  Changed By Another</h4>
+                </div>
+
+                <div style="margin-top:10px;">
+
+                    @if (showRefresh)
+                    {
+                        <a asp-page="/Profile/ProfileEdit"
+                           asp-route-userId=@TempData["UserId"]
+                           asp-route-profileId=@TempData["ProfileId"]
+                           asp-route-profileName=@TempData["ProfileName"]
+                           asp-route-returnUrl=@TempData["ReturnUrl"]
+                           class="btn btn-xs btn-warning">
+                            Refresh&nbsp;<i class="fas fa-sync"></i>
+                        </a>
+
+                    }
+                    else
+                    {
+                        <button class="btn btn-xs btn-success" type="submit" id="updtProfileEdit"
+                                onclick="ftnUpdateBtnClick()">
+                            Update&nbsp;<i class="fa fa-save"></i>
+                        </button>
+                    }
+
+                    <a asp-page="/WebSitesMenu/WebSitesMenuIndex"
+                       asp-route-userId=@TempData["UserId"]
+                       asp-route-profileId=@TempData["ProfileId"]
+                       asp-route-profileName=@TempData["ProfileName"]
+                       asp-route-returnUrl=@TempData["ReturnUrl"]
+                       class="btn btn-xs btn-info"   style="margin-left:40px;">
+                        WebSites Menu&nbsp;<i class="fas fa-list"></i>
+                    </a>
+                    <a asp-page=@TempData["ReturnUrl"]
+                       asp-route-userId=@TempData["UserId"]
+                       class="btn btn-xs btn-primary pull-right">
+                        Return&nbsp;<i class="fa fa-hand-point-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function ftnUpdateBtnClick() {
+        document.getElementById("UpdateSuccessfull").classList.add("hidden");
+        document.getElementById("UpdateUnSuccessfull").classList.add("hidden");
+    }
+</script>
+
+@section Scripts {
+    <script src="~/js/State.js"></script>
+    <script src="~/js/ZipCode.js"></script>
+    <script src="~/js/AccountNumber.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

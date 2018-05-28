@@ -1,0 +1,143 @@
+﻿@page
+@model WebMaster.Pages.UserAccount.UserIndexModel
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Users";
+
+    var isDisabled = "";
+    var prevDisabled = !Model.ApplicationUser.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.ApplicationUser.HasNextPage ? "disabled" : "";
+}
+
+<h2 style="text-decoration:underline;">@ViewData["Title"]</h2>
+
+<form>
+    <div class="row container">
+        <div class="pull-right btn-group">
+            <button name="searchBy" value="UserId" class="btn btn-xs btn-info"
+                    style="padding-left:5px; padding-right:5px">
+                User Name&nbsp;<span class="fa fa-search"></span>
+            </button>
+            <button name="searchBy" value="EMail" class="btn btn-xs btn-info"
+                    style="padding-left:5px; padding-right:5px">
+                E-Mail&nbsp;<span class="fa fa-search"></span>
+            </button>
+            <button name="searchBy" value="Phone" class="btn btn-xs btn-info"
+                    style="padding-left:5px; padding-right:5px">
+                Phone&nbsp;<span class="fa fa-search"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="row container">
+        <a asp-page="./UserIndex" class="btn btn-sm btn-success pull-right"
+           style="padding-left:7px; padding-right:6px; padding-top:3px; padding-bottom:4px">
+            Reset&nbsp;<span class="fa fa-undo"></span>
+        </a>
+        <input class="input-sm UserInput pull-right" type="text" name="SearchString"
+               value="@Model.CurrentFilter" autofocus
+               style="background-color: antiquewhite; width:155px;"
+               spellcheck="false" autocomplete="off" placeholder="Search Users" />
+
+        <button formaction="/UserAccount/Register" name="returnUrl" value="/UserAccount/UserIndex"
+                class="btn btn-primary btn-sm pull-left" style="padding-top:3px; padding-bottom:4px">
+            New User&nbsp;<span class="fa fa-user-plus"></span>
+        </button>
+
+    </div>
+
+</form>
+
+<div>
+    <table class="table col-xs-12">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-page="./UserIndex"
+                       asp-route-sortOrder="@Model.UserIdSort"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       asp-route-searchBy="@Model.SearchBy"
+                       style="font-size:medium">
+                        User Name
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./UserIndex"
+                       asp-route-sortOrder="@Model.EmailSort"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       asp-route-searchBy="@Model.SearchBy"
+                       style="font-size:medium">
+                        E-Mail Address
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./UserIndex"
+                       asp-route-sortOrder="@Model.PhoneSort"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       asp-route-searchBy="@Model.SearchBy"
+                       style="font-size:medium">
+                        Phone Number
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./UserIndex"
+                       asp-route-sortOrder="@Model.CurrentSort"
+                       asp-route-pageIndex="@(Model.ApplicationUser.PageIndex - 1)"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       asp-route-searchBy="@Model.SearchBy"
+                       data-toggle="tooltip" data-placement="left" title="Page Up!"
+                       class="btn btn-xs btn-warning pull-left toolTip @prevDisabled">
+                        <span class="fa fa-arrow-up"></span>
+                    </a>
+
+                    <a asp-page="./UserIndex"
+                       asp-route-sortOrder="@Model.CurrentSort"
+                       asp-route-pageIndex="@(Model.ApplicationUser.PageIndex + 1)"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       asp-route-searchBy="@Model.SearchBy"
+                       data-toggle="tooltip" data-placement="left" title="Page Down!"
+                       class="btn btn-xs btn-warning pull-right toolTip @nextDisabled">
+                        <span class="fa fa-arrow-down"></span>
+                    </a>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.ApplicationUser)
+            {
+
+                isDisabled = item.Id == UserManager.GetUserId(User) ? "disabled" : "";
+
+                <tr>
+                    <td class="col-xs-2">
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td class="col-xs-7">
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td class="col-xs-2">
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+
+                    <td class="col-xs-1">
+                        <a asp-page="./UserEdit"
+                           asp-route-userId="@item.Id"
+                           data-toggle="tooltip" data-placement="left" title="Edit User!"
+                           class="btn btn-primary btn-xs pull-left toolTip">
+                            <span class="fa fa-pencil-alt"></span>
+                        </a>
+                        <a asp-page="./UserDelete"
+                           asp-route-userId="@item.Id"
+                           data-toggle="tooltip" data-placement="left" title="Delete User!"
+                           class="btn btn-danger btn-xs pull-right toolTip @isDisabled">
+                            <span class="fa fa-trash-alt"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

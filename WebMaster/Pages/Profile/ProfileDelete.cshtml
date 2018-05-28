@@ -1,0 +1,124 @@
+﻿@page
+@model WebMaster.Pages.Profile.ProfileDeleteModel
+
+@{
+    ViewData["Title"] = "Profile Delete";
+}
+
+<h2 style="text-decoration:underline;">@ViewData["Title"]</h2>
+
+<div class="row container">
+    <div class="col-xs-12 col-sm-3 col-md-5 col-lg-4 UserWindow">
+        <form method="post" asp-route-profileId="@Model.Profile.Id">
+
+            <input type="hidden" asp-for="Profile.Id" />
+
+            <dl class="dl-horizontal RowTop" style="margin-bottom:0px">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Profile.LastName)
+                </dt>
+                <dd>
+                    @Model.ShortLastName
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Profile.FirstName)
+                </dt>
+                <dd>
+                    @Model.ShortFirstName
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Profile.City)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Profile.City)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Profile.State)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Profile.State)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Profile.ZipCode)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Profile.ZipCode)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Profile.ProfileImage)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Profile.ProfileImage)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Profile.AccountNumber)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Profile.AccountNumber)
+                </dd>
+            </dl>
+
+            <hr />
+
+            <dl class="dl-horizontal RowTop">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Profile.DateCreate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Profile.DateCreate)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Profile.DateLastUpdate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Profile.DateLastUpdate)
+                </dd>
+            </dl>
+
+            <hr />
+
+            <dl class="dl-horizontal RowTop" style="margin-bottom:0px;">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Profile.Id)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Profile.Id)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Profile.ApplicationUser)
+                </dt>
+                <dd>
+                    @{
+                        var shortUserId = Model.Profile.ApplicationUser.Id;
+                        shortUserId = shortUserId.Substring(0, 20) + " ...";
+                    }
+                    @shortUserId
+                </dd>
+            </dl>
+
+            <div>
+                @if (!String.IsNullOrEmpty(TempData["WebSitesOnFileMsg"].ToString()))
+                {
+                    <hr />
+                    <button class="btn btn-block btn-lg RowTop" style="font-weight:600; background-color:aqua; color:red; " disabled>
+                        @TempData["WebSitesOnFileMsg"]
+                    </button>
+                }
+            </div>
+
+            <hr />
+
+            <div class="RowTop RowBottom">
+                <button class="btn btn-sm btn-danger" type="submit">
+                    Verify Delete&nbsp;<span class="fa fa-trash"></span>
+                </button>
+                <a asp-page="./ProfileIndex"
+                   asp-route-returnUrl=@TempData["ReturnUrl"]
+                   class="btn btn-sm btn-primary pull-right">
+                    Return&nbsp;<span class="fa fa-hand-point-left"></span>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

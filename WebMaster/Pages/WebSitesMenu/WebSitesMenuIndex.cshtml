@@ -1,0 +1,125 @@
+﻿@page
+@model WebMaster.Pages.WebSitesMenu.WebSitesMenuIndexModel
+@inject ApplicationDbContext _context
+
+@{
+    ViewData["Title"] = "WebSites Menu";
+    var menuCount = Model.WebSitesMenuModel.Count();
+    var webSitesDisabled = "";
+}
+
+<h2 style="text-decoration:underline">@ViewData["Title"]</h2>
+
+<div class="col-xs-12 col-sm-5 UserWindow">
+
+    <div class="RowTop">
+        <label class="InfoLabel">
+            &nbsp;@TempData["ProfileName"]&nbsp;
+        </label>
+
+        <button class="pull-right"
+                style="background-color:red; color:yellow"
+                disabled @TempData["DeletedMenuItemMsgHidden"]>
+            Selected Item Was Deleted By Another User!
+        </button>
+    </div>
+
+    <hr />
+
+    <table class="table RowTop">
+        <thead>
+            <tr>
+                <th> Id </th>
+                <th> Seq. # </th>
+                <th> Description </th>
+                <th> Options </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.WebSitesMenuModel)
+            {
+                var webSites = _context.WebSites
+                    .FirstOrDefault(w => w.WebSitesMenuId == item.Id);
+
+                webSitesDisabled = webSites == null ? "" : "disabled";
+
+                <tr>
+                    <td style="width:10%">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td style="width:10%">
+                        @Html.DisplayFor(modelItem => item.SequenceNumber)
+                    </td>
+                    <td style="width:40%">
+                        <a asp-page="/WebSites/WebSitesIndex"
+                           asp-route-userId=@TempData["UserId"]
+                           asp-route-profileId=@TempData["ProfileId"]
+                           asp-route-profileName=@TempData["ProfileName"]
+                           asp-route-webSitesMenuId="@item.Id"
+                           asp-route-webSitesMenuDescription="@item.Description"
+                           asp-route-returnUrl=@TempData["ReturnUrl"]
+                           class="btn btn-xs btn-info btn-block">
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </a>
+
+                    </td>
+                    <td style="width:5%">
+                        <a asp-page="WebSitesMenuEdit"
+                           asp-route-userId=@TempData["UserId"]
+                           asp-route-webSitesMenuId="@item.Id"
+                           asp-route-profileId=@TempData["ProfileId"]
+                           asp-route-profileName=@TempData["ProfileName"]
+                           asp-route-returnUrl=@TempData["ReturnUrl"]
+                           data-toggle="tooltip" data-placement="left" title="Edit Item!"
+                           class="btn btn-primary btn-xs pull-left toolTip"
+                           style="padding-left:3px; padding-right:3px">
+                            <i class="fa fa-pencil-alt"></i>
+                        </a>
+                        <a asp-page="WebSitesMenuDelete"
+                           asp-route-userId=@TempData["UserId"]
+                           asp-route-webSitesMenuId="@item.Id"
+                           asp-route-profileId=@TempData["ProfileId"]
+                           asp-route-profileName=@TempData["ProfileName"]
+                           asp-route-returnUrl=@TempData["ReturnUrl"]
+                           data-toggle="tooltip" data-placement="left" title="Delete Item!"
+                           class="btn btn-danger btn-xs pull-right toolTip @webSitesDisabled"
+                           style="padding-left:3px; padding-right:3px">
+                            <i class="fa fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (menuCount > 0)
+    {
+        <span style="font-size:smaller; color:gray;">
+            <i class="fas fa-asterisk"></i>&nbsp;Click Menu Description For WebSites
+        </span>
+    }
+
+    <hr style="margin-top:0px" />
+
+    <div class="RowTop RowBottom">
+        <a asp-page="WebSitesMenuCreate"
+           asp-route-userId=@TempData["UserId"]
+           asp-route-profileId=@TempData["ProfileId"]
+           asp-route-profileName=@TempData["ProfileName"]
+           asp-route-returnUrl=@TempData["ReturnUrl"]
+           class="btn btn-sm btn-success">
+            Create New&nbsp;<i class="fa fa-plus-circle"></i>
+        </a>
+
+        <a asp-page="/Profile/ProfileEdit"
+           asp-route-userId=@TempData["UserId"]
+           asp-route-profileId=@TempData["ProfileId"]
+           asp-route-profileName=@TempData["ProfileName"]
+           asp-route-returnUrl=@TempData["ReturnUrl"]
+           class="btn btn-sm btn-primary pull-right">
+            Return&nbsp;<i class="fa fa-hand-point-left"></i>
+        </a>
+    </div>
+</div>
+
